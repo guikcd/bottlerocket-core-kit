@@ -9,6 +9,23 @@ ExecStart=/usr/bin/apiserver --datastore-path /var/lib/bottlerocket/datastore/cu
 Restart=always
 RestartSec=5
 StandardError=journal+console
+# Sandboxing
+NoNewPrivileges=yes
+#ProtectSystem=strict # fail to start with it
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+RemoveIPC=yes
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_UNIX
+ReadWritePaths=/var/lib/bottlerocket /run
+ReadOnlyPaths=/etc /run/host-containerd
+#CapabilityBoundingSet=
+#AmbientCapabilities=
 
 [Install]
 WantedBy=preconfigured.target
