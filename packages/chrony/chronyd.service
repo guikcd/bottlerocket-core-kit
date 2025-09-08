@@ -7,6 +7,24 @@ Wants=network-online.target preconfigured.target
 [Service]
 Type=simple
 ExecStart=/usr/sbin/chronyd -d -F -1
+# Sandboxing
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+RemoveIPC=yes
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ReadWritePaths=/var/lib/chrony /var/run/chrony /run/chrony
+ReadOnlyPaths=/etc
+#CapabilityBoundingSet=CAP_SYS_TIME # fail with: "Fatal error : Could not open /var/run/chrony/chronyd.pid : Permission denied"
+AmbientCapabilities=CAP_SYS_TIME
+
 
 [Install]
 WantedBy=configured.target
